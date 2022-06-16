@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19461" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Dishes" representedClassName="Dishes" syncable="YES" codeGenerationType="class">
+        <attribute name="name" attributeType="String"/>
+        <relationship name="dishComponents" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredients" inverseName="dishes" inverseEntity="Ingredients"/>
+    </entity>
+    <entity name="Ingredients" representedClassName="Ingredients" syncable="YES" codeGenerationType="class">
+        <attribute name="inStore" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="dishes" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Dishes" inverseName="dishComponents" inverseEntity="Dishes"/>
+    </entity>
+    <elements>
+        <element name="Ingredients" positionX="639.265625" positionY="245.791748046875" width="128" height="88"/>
+        <element name="Dishes" positionX="430.589599609375" positionY="122.5625305175781" width="128" height="73"/>
+    </elements>
 </model>
