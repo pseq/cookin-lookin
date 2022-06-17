@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import CoreData
 
-class ViewController: UIViewController {
+class DishesViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
