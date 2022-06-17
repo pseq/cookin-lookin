@@ -16,6 +16,7 @@ class DishesViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        loadDishes()
     }
 
     //MARK: TableView stuff -
@@ -27,10 +28,59 @@ class DishesViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DishCell", for: indexPath)
         let dish = dishesArr[indexPath.item]
         
-        // todo заменить deprecated textLabel 
+        //TODO: заменить deprecated textLabel
         cell.textLabel?.text = dish.name
         
         return cell
     }
+    
+    //MARK: Data manipulation stuff -
+    func saveDishes() {
+        do {
+            try context.save()
+        } catch {
+            print("Error save dishes to CoreData: \(error)")
+        }
+        tableView.reloadData()
+    }
+    
+    func loadDishes() {
+        let request = Dishes.fetchRequest() //: NSFetchRequest<Dishes>
+        do {
+            dishesArr = try context.fetch(request)
+        } catch {
+            print("Error load dishes from CoreData: \(error)")
+        }
+        tableView.reloadData()
+    }
+    
+    //MARK: Addin dishes -
+    @IBAction func addBtnPressed(_ sender: UIBarButtonItem) {
+        
+        //TODO: Заменить на новый вью с выбором продуктов
+        var textField = UITextField()
+
+        let alert = UIAlertController(title: "Add a dish", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add", style: .default) { (action) in
+            let newDish = Dishes(context: self.context)
+            newDish.name = textField.text ?? ""
+            self.dishesArr.append(newDish)
+            self.saveDishes()
+        }
+        
+        let actionDis = UIAlertAction(title: "Cancel", style: .default) { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }
+
+        alert.addTextField { (alerTextField) in
+            alerTextField.placeholder = "Type new dish"
+            textField = alerTextField
+        }
+
+        alert.addAction(action)
+        alert.addAction(actionDis)
+        present(alert, animated: true, completion: nil)
+    }
+    
 }
 
