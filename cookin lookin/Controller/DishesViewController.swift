@@ -29,7 +29,11 @@ class DishesViewController: UITableViewController {
         let dish = dishesArr[indexPath.item]
         
         //TODO: заменить deprecated textLabel
-        cell.textLabel?.text = dish.name
+//        cell.textLabel?.text = dish.name
+        
+        var content = cell.defaultContentConfiguration()
+        content.text = dish.name
+        cell.contentConfiguration = content
         
         return cell
     }
@@ -66,6 +70,8 @@ class DishesViewController: UITableViewController {
             newDish.name = textField.text ?? ""
             self.dishesArr.append(newDish)
             self.saveDishes()
+            
+            self.performSegue(withIdentifier: "showIngreds", sender: self)
         }
         
         let actionDis = UIAlertAction(title: "Cancel", style: .default) { (action) in

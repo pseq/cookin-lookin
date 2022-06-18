@@ -16,6 +16,70 @@ class IngredientsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        //loadDishes()
+        loadIngreds()
     }
+
+    //MARK: TableView stuff -
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return ingredsArr.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "IngredCell", for: indexPath)
+        let ingredient = ingredsArr[indexPath.item]
+        
+        var content = cell.defaultContentConfiguration()
+        content.text = ingredient.name
+        cell.contentConfiguration = content
+        
+        return cell
+    }
+    
+    //MARK: Data manipulation stuff -
+    func saveIngreds() {
+        do {
+            try context.save()
+        } catch {
+            print("Error save ingreds to CoreData: \(error)")
+        }
+        tableView.reloadData()
+    }
+    
+    func loadIngreds() {
+        let request = Ingredients.fetchRequest() //: NSFetchRequest<Dishes>
+        do {
+            ingredsArr = try context.fetch(request)
+        } catch {
+            print("Error load ingreds from CoreData: \(error)")
+        }
+        tableView.reloadData()
+    }
+    
+    //MARK: Addin ingreds -
+    @IBAction func addBtnPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+
+        let alert = UIAlertController(title: "Add a ingredient", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add", style: .default) { (action) in
+            let newIngred = Ingredients(context: self.context)
+            newIngred.name = textField.text ?? ""
+            self.ingredsArr.append(newIngred)
+            self.saveIngreds()
+        }
+        
+        let actionDis = UIAlertAction(title: "Cancel", style: .default) { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }
+
+        alert.addTextField { (alerTextField) in
+            alerTextField.placeholder = "Type new ingredient"
+            textField = alerTextField
+        }
+
+        alert.addAction(action)
+        alert.addAction(actionDis)
+        present(alert, animated: true, completion: nil)
+    }
+    
 }

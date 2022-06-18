@@ -38,23 +38,23 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="nqX-Mk-rjd" kind="show" id="08a-kS-rrM"/>
+                        <segue destination="nqX-Mk-rjd" kind="show" identifier="showIngreds" id="08a-kS-rrM"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="z8x-QR-4eX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2173.913043478261" y="107.8125"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Ingredients-->
         <scene sceneID="ct1-w6-WEG">
             <objects>
-                <tableViewController id="nqX-Mk-rjd" sceneMemberID="viewController">
+                <tableViewController id="nqX-Mk-rjd" customClass="IngredientsViewController" customModule="cookin_lookin" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="MtT-YS-SON">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="it1-AS-ANN">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="IngredCell" id="it1-AS-ANN">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="it1-AS-ANN" id="LC2-za-L3e">
@@ -68,13 +68,17 @@
                             <outlet property="delegate" destination="nqX-Mk-rjd" id="QLC-gk-1ZP"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="Xys-no-ZxD">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="jlu-Zs-oTq"/>
+                    <navigationItem key="navigationItem" title="Ingredients" id="Xys-no-ZxD">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="jlu-Zs-oTq">
+                            <connections>
+                                <action selector="addBtnPressed:" destination="nqX-Mk-rjd" id="BTF-XS-PIB"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M9I-QF-SeJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3261" y="108"/>
+            <point key="canvasLocation" x="3290" y="268"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7Yk-Fl-1bc">
