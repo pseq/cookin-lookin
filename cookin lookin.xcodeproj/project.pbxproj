@@ -14,6 +14,7 @@
 		55A1AD33285BBD2F00B52156 /* cookin_lookin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 55A1AD31285BBD2F00B52156 /* cookin_lookin.xcdatamodeld */; };
 		55A1AD35285BBD3800B52156 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55A1AD34285BBD3800B52156 /* Assets.xcassets */; };
 		55A1AD38285BBD3800B52156 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55A1AD36285BBD3800B52156 /* LaunchScreen.storyboard */; };
+		55A1AD43285DA2C500B52156 /* IngredientsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A1AD42285DA2C500B52156 /* IngredientsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		55A1AD34285BBD3800B52156 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55A1AD37285BBD3800B52156 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		55A1AD39285BBD3800B52156 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55A1AD42285DA2C500B52156 /* IngredientsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				55A1AD2C285BBD2F00B52156 /* DishesViewController.swift */,
+				55A1AD42285DA2C500B52156 /* IngredientsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -165,6 +168,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55A1AD43285DA2C500B52156 /* IngredientsViewController.swift in Sources */,
 				55A1AD33285BBD2F00B52156 /* cookin_lookin.xcdatamodeld in Sources */,
 				55A1AD2D285BBD2F00B52156 /* DishesViewController.swift in Sources */,
 				55A1AD29285BBD2F00B52156 /* AppDelegate.swift in Sources */,
