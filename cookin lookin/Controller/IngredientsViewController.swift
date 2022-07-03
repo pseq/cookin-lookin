@@ -12,6 +12,11 @@ class IngredientsViewController: UITableViewController {
 
     var ingredsArr = [Ingredients]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var selectedDish : Dishes? {
+        didSet{
+            loadIngreds()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,6 +52,11 @@ class IngredientsViewController: UITableViewController {
     
     func loadIngreds() {
         let request = Ingredients.fetchRequest() //: NSFetchRequest<Dishes>
+        
+        print("LOAD INGREDS - SELECTED.DISH: \(selectedDish!.name!)")
+
+//        request.predicate = NSPredicate(format: "ANY dishes.name MATCHES %@", selectedDish!.name!)
+        request.predicate = NSPredicate(format: "%@ IN dishes.name", selectedDish!.name!)
         do {
             ingredsArr = try context.fetch(request)
         } catch {
@@ -64,6 +74,15 @@ class IngredientsViewController: UITableViewController {
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
             let newIngred = Ingredients(context: self.context)
             newIngred.name = textField.text ?? ""
+            newIngred.inStore = false
+            // добавляем ингредиенту родительское блюдо
+            // нужно ли блюду добавить ингредиент, или это случится автоматически?
+            // нужно походу
+            if let parentDish = self.selectedDish {
+                newIngred.addToDishes(parentDish)
+                print("ADDIN PARENT DISH \(parentDish.name) TO INGRED \(newIngred.name)")
+            }
+            print("AND NOW \(newIngred.name) HAS PARENT DISH \(newIngred.dishes)")
             self.ingredsArr.append(newIngred)
             self.saveIngreds()
         }
@@ -80,6 +99,12 @@ class IngredientsViewController: UITableViewController {
         alert.addAction(action)
         alert.addAction(actionDis)
         present(alert, animated: true, completion: nil)
+    }
+    
+    //MARK: Select Ingreds Methods -
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        performSegue(withIdentifier: "showIngreds", sender: self)
+        print("AND HERE: \(ingredsArr[indexPath.row].name ?? "NONAME") WE HAVE SOME DISHES: \(ingredsArr[indexPath.row].dishes)")
     }
     
 }

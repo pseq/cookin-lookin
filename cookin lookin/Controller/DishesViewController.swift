@@ -12,6 +12,7 @@ class DishesViewController: UITableViewController {
 
     var dishesArr = [Dishes]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +62,6 @@ class DishesViewController: UITableViewController {
     //MARK: Addin dishes -
     @IBAction func addBtnPressed(_ sender: UIBarButtonItem) {
         
-        //TODO: Заменить на новый вью с выбором продуктов
         var textField = UITextField()
 
         let alert = UIAlertController(title: "Add a dish", message: "", preferredStyle: .alert)
@@ -86,6 +86,22 @@ class DishesViewController: UITableViewController {
         alert.addAction(action)
         alert.addAction(actionDis)
         present(alert, animated: true, completion: nil)
+    }
+    
+    //MARK: Select Dish Methods -
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "showIngreds", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        dishesArr[indexPath.row]
+        let destinationVC = segue.destination as! IngredientsViewController
+        if let indexPath = tableView.indexPathForSelectedRow {
+//            print("LOOK AT THIS SHIT \(someshit ?? "NOTHIN SHIT")")
+            destinationVC.selectedDish = dishesArr[indexPath.row]
+//            print("HERES CAT ITEMS: \(categoryArray[indexPath.row].items)")
+        }
+        
     }
     
 }
