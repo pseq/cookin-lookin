@@ -31,11 +31,18 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Dishes" id="Wqm-cu-3ey">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="RCH-mb-0Zj">
-                            <connections>
-                                <action selector="addBtnPressed:" destination="cAC-wX-1Ad" id="LAz-Jr-y6a"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="RCH-mb-0Zj">
+                                <connections>
+                                    <action selector="addBtnPressed:" destination="cAC-wX-1Ad" id="LAz-Jr-y6a"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="IngredListButton" image="checklist" catalog="system" id="eyb-90-jkV">
+                                <connections>
+                                    <action selector="ingredsBtnPressed:" destination="cAC-wX-1Ad" id="Mq3-DR-Jte"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <segue destination="nqX-Mk-rjd" kind="show" identifier="showIngreds" id="08a-kS-rrM"/>
@@ -100,6 +107,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="checklist" catalog="system" width="128" height="105"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

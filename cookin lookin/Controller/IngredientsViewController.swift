@@ -36,6 +36,7 @@ class IngredientsViewController: UITableViewController {
         var content = cell.defaultContentConfiguration()
         content.text = ingredient.name
         cell.contentConfiguration = content
+        cell.accessoryType = ingredient.inStore ? .checkmark: .none
         
         return cell
     }
@@ -53,10 +54,14 @@ class IngredientsViewController: UITableViewController {
     func loadIngreds() {
         let request = Ingredients.fetchRequest() //: NSFetchRequest<Dishes>
         
-        print("LOAD INGREDS - SELECTED.DISH: \(selectedDish!.name!)")
+//        print("LOAD INGREDS - SELECTED.DISH: \(selectedDish!.name!)")
 
 //        request.predicate = NSPredicate(format: "ANY dishes.name MATCHES %@", selectedDish!.name!)
-        request.predicate = NSPredicate(format: "%@ IN dishes.name", selectedDish!.name!)
+        //потом заменить на выбор предиката из параметров
+        if let parentDish = selectedDish {
+            request.predicate = NSPredicate(format: "%@ IN dishes.name", parentDish.name!)
+        }
+        
         do {
             ingredsArr = try context.fetch(request)
         } catch {
@@ -104,7 +109,12 @@ class IngredientsViewController: UITableViewController {
     //MARK: Select Ingreds Methods -
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        performSegue(withIdentifier: "showIngreds", sender: self)
-        print("AND HERE: \(ingredsArr[indexPath.row].name ?? "NONAME") WE HAVE SOME DISHES: \(ingredsArr[indexPath.row].dishes)")
+//        print("AND HERE: \(ingredsArr[indexPath.row].name ?? "NONAME") WE HAVE SOME DISHES: \(ingredsArr[indexPath.row].dishes)")
+        
+        let ingred = ingredsArr[indexPath.row]
+        ingred.inStore = !ingred.inStore
+        
+        saveIngreds()
     }
     
 }

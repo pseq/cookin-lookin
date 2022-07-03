@@ -59,7 +59,11 @@ class DishesViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    //MARK: Addin dishes -
+    //MARK: Buttons -
+    @IBAction func ingredsBtnPressed(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "showIngreds", sender: self)
+    }
+    
     @IBAction func addBtnPressed(_ sender: UIBarButtonItem) {
         
         var textField = UITextField()
