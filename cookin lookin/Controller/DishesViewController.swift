@@ -29,11 +29,9 @@ class DishesViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DishCell", for: indexPath)
         let dish = dishesArr[indexPath.item]
         
-        //TODO: заменить deprecated textLabel
-//        cell.textLabel?.text = dish.name
-        
         var content = cell.defaultContentConfiguration()
         content.text = dish.name
+        cell.backgroundColor = dishCheckout(dish)
         cell.contentConfiguration = content
         
         return cell
@@ -98,13 +96,51 @@ class DishesViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        dishesArr[indexPath.row]
+        
         let destinationVC = segue.destination as! IngredientsViewController
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.selectedDish = dishesArr[indexPath.row]
+//            print("DISH COMP: \(dishesArr[indexPath.row].dishComponents)")
         }
         
     }
     
+    //MARK: Dish Checkout -
+    func dishCheckout(_ dish: Dishes) -> UIColor {
+        let requestInStore = Ingredients.fetchRequest() //: NSFetchRequest<Dishes>
+        let requestAllCount = Ingredients.fetchRequest() //: NSFetchRequest<Dishes>
+        requestInStore.predicate = NSPredicate(format: "%@ IN dishes.name AND inStore = true", dish.name!)
+        requestAllCount.predicate = NSPredicate(format: "%@ IN dishes.name", dish.name!)
+//        var ingredsArr = [Ingredients]()
+
+//        do {
+//            ingredsArr = try context.fetch(request)
+//        } catch {
+//            print("Error load ingreds from CoreData: \(error)")
+//        }
+        
+        var inStoreCount = 0
+        var allCount = 0
+        
+        do {
+            inStoreCount = try context.count(for: requestInStore)
+            allCount = try context.count(for: requestAllCount)
+        } catch {
+            print("Error count ingreds in CoreData: \(error)")
+        }
+        
+        switch (inStoreCount - outStoreCount) {
+        case <#pattern#>:
+            <#code#>
+        default:
+            <#code#>
+        }
+        
+        if ingredsArr.count > 0 {
+            return .green
+        } else {
+            return .red
+        }
+    }
 }
 
