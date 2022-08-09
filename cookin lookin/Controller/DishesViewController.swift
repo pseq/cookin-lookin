@@ -101,9 +101,7 @@ class DishesViewController: UITableViewController {
 //        dishesArr[indexPath.row]
         let destinationVC = segue.destination as! IngredientsViewController
         if let indexPath = tableView.indexPathForSelectedRow {
-//            print("LOOK AT THIS SHIT \(someshit ?? "NOTHIN SHIT")")
             destinationVC.selectedDish = dishesArr[indexPath.row]
-//            print("HERES CAT ITEMS: \(categoryArray[indexPath.row].items)")
         }
         
     }

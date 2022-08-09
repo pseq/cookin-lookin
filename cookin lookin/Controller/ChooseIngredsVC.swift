@@ -8,18 +8,22 @@
 import UIKit
 import CoreData
 
-class IngredientsViewController: UITableViewController {
+class ChooseIngredsVC: UITableViewController {
 
+    @IBOutlet weak var titleView: UINavigationItem!
     var ingredsArr = [Ingredients]()
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var selectedDish : Dishes?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        loadIngreds(selectedDish)
+        loadIngreds()
+        //меняем заголовок
+        if let parentDish = selectedDish {
+            titleView.title = "Choose ingredients for \(parentDish.name!)"
+        }
+        
     }
 
     //MARK: TableView stuff -
@@ -34,7 +38,10 @@ class IngredientsViewController: UITableViewController {
         var content = cell.defaultContentConfiguration()
         content.text = ingredient.name
         cell.contentConfiguration = content
-        cell.accessoryType = ingredient.inStore ? .checkmark: .none
+        //если ингредиент уже добавлен к блюду -- ставим ему галку
+        if let parentDish = selectedDish {
+            cell.accessoryType = ingredient.dishes!.contains(parentDish) ? .checkmark: .none
+        }
         
         return cell
     }
@@ -49,14 +56,8 @@ class IngredientsViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    func loadIngreds(_ forDish: Dishes?) {
+    func loadIngreds() {
         let request = Ingredients.fetchRequest() //: NSFetchRequest<Dishes>
-        
-//        request.predicate = NSPredicate(format: "ANY dishes.name MATCHES %@", selectedDish!.name!)
-        //потом заменить на выбор предиката из параметров
-        if let parentDish = forDish {
-            request.predicate = NSPredicate(format: "%@ IN dishes.name", parentDish.name!)
-        }
 
         do {
             ingredsArr = try context.fetch(request)
@@ -69,19 +70,7 @@ class IngredientsViewController: UITableViewController {
     //MARK: Addin ingreds -
     @IBAction func addBtnPressed(_ sender: UIBarButtonItem) {
         //кнопка плюс в ингредиентах -- создать и добавить к блюду новый
-        //makeNewIngred()
-        //временно -- открыть ChooseIngreds
-        if selectedDish == nil {
-            makeNewIngred()
-        } else {
-            performSegue(withIdentifier: "ShowChooseIngreds", sender: self)
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as! ChooseIngredsVC
-        //тут передаём выбору ингредиентов родительское блюдо
-        destinationVC.selectedDish = selectedDish
+        makeNewIngred()
     }
     
     func makeNewIngred() {
@@ -93,13 +82,9 @@ class IngredientsViewController: UITableViewController {
             newIngred.name = textField.text ?? ""
             newIngred.inStore = false
             // добавляем ингредиенту родительское блюдо
-            // нужно ли блюду добавить ингредиент, или это случится автоматически?
-            // нужно походу
             if let parentDish = self.selectedDish {
                 newIngred.addToDishes(parentDish)
-                //print("ADDIN PARENT DISH \(parentDish.name) TO INGRED \(newIngred.name)")
             }
-            //print("AND NOW \(newIngred.name) HAS PARENT DISH \(newIngred.dishes)")
             self.ingredsArr.append(newIngred)
             self.saveIngreds()
         }
@@ -120,10 +105,19 @@ class IngredientsViewController: UITableViewController {
     
     //MARK: Select Ingreds Methods -
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        let ingred = ingredsArr[indexPath.row]
-        ingred.inStore = !ingred.inStore
-        
-        saveIngreds()
+        let ingredient = ingredsArr[indexPath.row]
+        var checked = tableView.dequeueReusableCell(withIdentifier: "IngredCell", for: indexPath).accessoryType
+        //когда тыкаем и ингредиент -- он добавляется к блюду
+        if let parentDish = self.selectedDish {
+            if !ingredient.dishes!.contains(parentDish) {
+                ingredient.addToDishes(parentDish)
+                checked = .checkmark
+            } else {
+                ingredient.removeFromDishes(parentDish)
+                checked = .none
+            }
+            tableView.reloadData()
+        }
     }
+    
 }

@@ -82,10 +82,13 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="gGP-T0-a05" kind="show" identifier="ShowChooseIngreds" id="Dc4-eJ-pcD"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M9I-QF-SeJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3290" y="268"/>
+            <point key="canvasLocation" x="3294" y="-56"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="7Yk-Fl-1bc">
@@ -104,6 +107,44 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uel-Tk-NPA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1263.768115942029" y="107.8125"/>
+        </scene>
+        <!--Choose Ingredients-->
+        <scene sceneID="12W-sq-6Fz">
+            <objects>
+                <tableViewController id="gGP-T0-a05" customClass="ChooseIngredsVC" customModule="cookin_lookin" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="UNQ-W5-SaD">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="IngredCell" id="7xe-Af-dfh" userLabel="IngredCell">
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="7xe-Af-dfh" id="ZqX-Fe-ZYh">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="gGP-T0-a05" id="EX2-Fi-29d"/>
+                            <outlet property="delegate" destination="gGP-T0-a05" id="9B5-Uh-rKu"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Choose Ingredients" id="TXN-yP-2Se">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="49T-5l-8Ct">
+                            <connections>
+                                <action selector="addBtnPressed:" destination="gGP-T0-a05" id="KcO-1C-Qo4"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="titleView" destination="TXN-yP-2Se" id="qMc-fl-CfB"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jwk-Bc-t9s" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4735" y="347"/>
         </scene>
     </scenes>
     <resources>

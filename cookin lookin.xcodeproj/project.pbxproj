@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5539758028A06A150088871F /* ChooseIngredsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5539757F28A06A150088871F /* ChooseIngredsVC.swift */; };
 		55A1AD29285BBD2F00B52156 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A1AD28285BBD2F00B52156 /* AppDelegate.swift */; };
 		55A1AD2B285BBD2F00B52156 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A1AD2A285BBD2F00B52156 /* SceneDelegate.swift */; };
 		55A1AD2D285BBD2F00B52156 /* DishesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A1AD2C285BBD2F00B52156 /* DishesViewController.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5539757F28A06A150088871F /* ChooseIngredsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseIngredsVC.swift; sourceTree = "<group>"; };
 		55A1AD25285BBD2F00B52156 /* cookin lookin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cookin lookin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55A1AD28285BBD2F00B52156 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55A1AD2A285BBD2F00B52156 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 			children = (
 				55A1AD2C285BBD2F00B52156 /* DishesViewController.swift */,
 				55A1AD42285DA2C500B52156 /* IngredientsViewController.swift */,
+				5539757F28A06A150088871F /* ChooseIngredsVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5539758028A06A150088871F /* ChooseIngredsVC.swift in Sources */,
 				55A1AD43285DA2C500B52156 /* IngredientsViewController.swift in Sources */,
 				55A1AD33285BBD2F00B52156 /* cookin_lookin.xcdatamodeld in Sources */,
 				55A1AD2D285BBD2F00B52156 /* DishesViewController.swift in Sources */,
