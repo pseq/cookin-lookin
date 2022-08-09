@@ -16,7 +16,9 @@ class DishesViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         loadDishes()
     }
 
@@ -129,14 +131,14 @@ class DishesViewController: UITableViewController {
             print("Error count ingreds in CoreData: \(error)")
         }
         
-        switch (inStoreCount - outStoreCount) {
-        case <#pattern#>:
-            <#code#>
-        default:
-            <#code#>
-        }
+//        switch (inStoreCount - outStoreCount) {
+//        case <#pattern#>:
+//            <#code#>
+//        default:
+//            <#code#>
+//        }
         
-        if ingredsArr.count > 0 {
+        if allCount == inStoreCount {
             return .green
         } else {
             return .red
