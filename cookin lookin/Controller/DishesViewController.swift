@@ -111,6 +111,7 @@ class DishesViewController: UITableViewController {
     func dishCheckout(_ dish: Dishes) -> UIColor {
         let requestInStore = Ingredients.fetchRequest() //: NSFetchRequest<Dishes>
         let requestAllCount = Ingredients.fetchRequest() //: NSFetchRequest<Dishes>
+        // запросы ингредиентов блюда имеющихся и не имеющихся в наличии
         requestInStore.predicate = NSPredicate(format: "%@ IN dishes.name AND inStore = true", dish.name!)
         requestAllCount.predicate = NSPredicate(format: "%@ IN dishes.name", dish.name!)
 //        var ingredsArr = [Ingredients]()
@@ -124,24 +125,34 @@ class DishesViewController: UITableViewController {
         var inStoreCount = 0
         var allCount = 0
         
+        // считаем ингридиенты имеющиеся и не имеющиеся в наличии для данного блюда
         do {
             inStoreCount = try context.count(for: requestInStore)
             allCount = try context.count(for: requestAllCount)
         } catch {
             print("Error count ingreds in CoreData: \(error)")
         }
-        
-//        switch (inStoreCount - outStoreCount) {
-//        case <#pattern#>:
-//            <#code#>
+//        - если есть все ингридиенты — зелёным
+//        - если не хватает более 60% — красным
+//        - остальные — жёлтым
+        //тут ошибка. На 0 почему-то не делится...
+//        switch Double(inStoreCount/allCount) {
+//        case 1:
+//            return .green
+//        case ..<0.6:
+//            return .red
 //        default:
-//            <#code#>
+//            return .yellow
 //        }
-        
-        if allCount == inStoreCount {
+        if allCount == 0 {
+            return .gray
+        } else if inStoreCount == allCount {
             return .green
-        } else {
+        } else if Double(inStoreCount)/Double(allCount) < 0.6 {
+            print (inStoreCount, allCount, Double(inStoreCount)/Double(allCount))
             return .red
+        } else {
+            return .yellow
         }
     }
 }
