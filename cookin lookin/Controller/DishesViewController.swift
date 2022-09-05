@@ -94,7 +94,13 @@ class DishesViewController: UITableViewController {
     
     //MARK: Select Dish Methods -
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //показать ингридиенты блюда
         performSegue(withIdentifier: "showIngreds", sender: self)
+        
+        //удалить блюдо по щелчку
+//        context.delete(dishesArr[indexPath.row])
+//        dishesArr.remove(at: indexPath.row)
+//        saveDishes()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -106,6 +112,25 @@ class DishesViewController: UITableViewController {
         }
         
     }
+    
+    //MARK: Delete Dish -
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let swipeDishLeft = UIContextualAction(style: .normal, title: "Delete") {
+            [weak self] (action, view, completionHandler) in self?.deleteDish(indexPath.row)
+            completionHandler(true)
+        }
+        swipeDishLeft.backgroundColor = .systemRed
+        
+        return UISwipeActionsConfiguration(actions: [swipeDishLeft])
+    }
+    
+    func deleteDish (_ dishIndex: Int) {
+        context.delete(dishesArr[dishIndex])
+        dishesArr.remove(at: dishIndex)
+        saveDishes()
+    }
+    
     
     //MARK: Dish Checkout -
     func dishCheckout(_ dish: Dishes) -> UIColor {
@@ -149,7 +174,6 @@ class DishesViewController: UITableViewController {
         } else if inStoreCount == allCount {
             return .green
         } else if Double(inStoreCount)/Double(allCount) < 0.6 {
-            print (inStoreCount, allCount, Double(inStoreCount)/Double(allCount))
             return .red
         } else {
             return .yellow
