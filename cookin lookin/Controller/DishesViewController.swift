@@ -96,21 +96,19 @@ class DishesViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //показать ингридиенты блюда
         performSegue(withIdentifier: "showIngreds", sender: self)
-        
-        //удалить блюдо по щелчку
-//        context.delete(dishesArr[indexPath.row])
-//        dishesArr.remove(at: indexPath.row)
-//        saveDishes()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         let destinationVC = segue.destination as! IngredientsViewController
+
+        // если ткнули в строку с блюдом -- показываем ингридиенты для него
+        // если нет -- для последнего добавленного (нового)
         if let indexPath = tableView.indexPathForSelectedRow {
             destinationVC.selectedDish = dishesArr[indexPath.row]
-//            print("DISH COMP: \(dishesArr[indexPath.row].dishComponents)")
+        } else {
+            destinationVC.selectedDish = dishesArr.last
         }
-        
     }
     
     //MARK: Delete Dish -
