@@ -43,6 +43,12 @@ class ChooseIngredsVC: UITableViewController {
             cell.accessoryType = ingredient.dishes!.contains(parentDish) ? .checkmark: .none
         }
         
+        // фон ячеек
+        let imageView = UIImageView()
+        let image = UIImage(named: "cell_img")
+        imageView.image = image
+        cell.backgroundView = imageView
+        
         return cell
     }
     

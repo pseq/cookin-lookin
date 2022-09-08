@@ -36,6 +36,12 @@ class IngredientsViewController: UITableViewController {
         cell.contentConfiguration = content
         cell.accessoryType = ingredient.inStore ? .checkmark: .none
         
+        // фон ячеек
+        let imageView = UIImageView()
+        let image = UIImage(named: "cell_img")
+        imageView.image = image
+        cell.backgroundView = imageView
+        
         return cell
     }
     

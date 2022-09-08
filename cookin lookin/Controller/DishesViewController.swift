@@ -32,9 +32,17 @@ class DishesViewController: UITableViewController {
         let dish = dishesArr[indexPath.item]
         
         var content = cell.defaultContentConfiguration()
+        
         content.text = dish.name
+        // раскраска ячеек
         cell.backgroundColor = dishCheckout(dish)
         cell.contentConfiguration = content
+        
+        // фон ячеек
+        let imageView = UIImageView()
+        let image = UIImage(named: "cell_img")
+        imageView.image = image
+        cell.backgroundView = imageView
         
         return cell
     }
@@ -137,13 +145,6 @@ class DishesViewController: UITableViewController {
         // запросы ингредиентов блюда имеющихся и не имеющихся в наличии
         requestInStore.predicate = NSPredicate(format: "%@ IN dishes.name AND inStore = true", dish.name!)
         requestAllCount.predicate = NSPredicate(format: "%@ IN dishes.name", dish.name!)
-//        var ingredsArr = [Ingredients]()
-
-//        do {
-//            ingredsArr = try context.fetch(request)
-//        } catch {
-//            print("Error load ingreds from CoreData: \(error)")
-//        }
         
         var inStoreCount = 0
         var allCount = 0
@@ -155,26 +156,13 @@ class DishesViewController: UITableViewController {
         } catch {
             print("Error count ingreds in CoreData: \(error)")
         }
-//        - если есть все ингридиенты — зелёным
-//        - если не хватает более 60% — красным
-//        - остальные — жёлтым
-        //тут ошибка. На 0 почему-то не делится...
-//        switch Double(inStoreCount/allCount) {
-//        case 1:
-//            return .green
-//        case ..<0.6:
-//            return .red
-//        default:
-//            return .yellow
-//        }
-        if allCount == 0 {
-            return .gray
-        } else if inStoreCount == allCount {
-            return .green
+
+        if inStoreCount == allCount {
+            return UIColor(named: "cellGreen")!
         } else if Double(inStoreCount)/Double(allCount) < 0.6 {
-            return .red
+            return UIColor(named: "cellRed")!
         } else {
-            return .yellow
+            return UIColor(named: "cellYellow")!
         }
     }
 }
