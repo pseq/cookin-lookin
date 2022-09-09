@@ -132,4 +132,22 @@ class IngredientsViewController: UITableViewController {
         
         saveIngreds()
     }
+    
+    //MARK: Delete Ingreds -
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let swipe = UIContextualAction(style: .normal, title: "Delete") {
+            [weak self] (action, view, completionHandler) in self?.deleteIngred(indexPath.row)
+            completionHandler(true)
+        }
+        swipe.backgroundColor = .systemRed
+        
+        return UISwipeActionsConfiguration(actions: [swipe])
+    }
+    
+    func deleteIngred (_ itemIndex: Int) {
+//        context.delete(dishesArr[dishIndex])
+//        dishesArr.remove(at: dishIndex)
+//        saveDishes()
+    }
 }

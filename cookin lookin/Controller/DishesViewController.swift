@@ -11,6 +11,8 @@ import CoreData
 class DishesViewController: UITableViewController {
 
     var dishesArr = [Dishes]()
+    // костыльная переменная для навигации
+    var selectedDish: Dishes?
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
     
@@ -69,6 +71,8 @@ class DishesViewController: UITableViewController {
     
     //MARK: Buttons -
     @IBAction func ingredsBtnPressed(_ sender: UIBarButtonItem) {
+        //показать все ингридиенты
+        selectedDish = nil
         performSegue(withIdentifier: "showIngreds", sender: self)
     }
     
@@ -83,6 +87,8 @@ class DishesViewController: UITableViewController {
             self.dishesArr.append(newDish)
             self.saveDishes()
             
+            //показать ингридиенты для нового блюда
+            self.selectedDish = newDish
             self.performSegue(withIdentifier: "showIngreds", sender: self)
         }
         
@@ -102,7 +108,8 @@ class DishesViewController: UITableViewController {
     
     //MARK: Select Dish Methods -
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //показать ингридиенты блюда
+        //показать ингридиенты выбранного блюда
+        selectedDish = dishesArr[indexPath.row]
         performSegue(withIdentifier: "showIngreds", sender: self)
     }
     
@@ -110,13 +117,18 @@ class DishesViewController: UITableViewController {
         
         let destinationVC = segue.destination as! IngredientsViewController
 
+        
         // если ткнули в строку с блюдом -- показываем ингридиенты для него
         // если нет -- для последнего добавленного (нового)
-        if let indexPath = tableView.indexPathForSelectedRow {
-            destinationVC.selectedDish = dishesArr[indexPath.row]
-        } else {
-            destinationVC.selectedDish = dishesArr.last
-        }
+//        if let indexPath = tableView.indexPathForSelectedRow {
+//            destinationVC.selectedDish = dishesArr[indexPath.row]
+//        } else {
+//            destinationVC.selectedDish = dishesArr.last
+//        }
+                    
+        //указывает, какие ингридиенты показывать
+        destinationVC.selectedDish = selectedDish
+
     }
     
     //MARK: Delete Dish -
@@ -157,7 +169,9 @@ class DishesViewController: UITableViewController {
             print("Error count ingreds in CoreData: \(error)")
         }
 
-        if inStoreCount == allCount {
+        if allCount == 0 {
+            return .clear
+        } else if inStoreCount == allCount {
             return UIColor(named: "cellGreen")!
         } else if Double(inStoreCount)/Double(allCount) < 0.6 {
             return UIColor(named: "cellRed")!
