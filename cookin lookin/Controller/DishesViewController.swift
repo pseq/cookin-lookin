@@ -56,6 +56,7 @@ class DishesViewController: UITableViewController {
         } catch {
             print("Error save dishes to CoreData: \(error)")
         }
+        
         tableView.reloadData()
     }
     
@@ -116,19 +117,8 @@ class DishesViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         let destinationVC = segue.destination as! IngredientsViewController
-
-        
-        // если ткнули в строку с блюдом -- показываем ингридиенты для него
-        // если нет -- для последнего добавленного (нового)
-//        if let indexPath = tableView.indexPathForSelectedRow {
-//            destinationVC.selectedDish = dishesArr[indexPath.row]
-//        } else {
-//            destinationVC.selectedDish = dishesArr.last
-//        }
-                    
         //указывает, какие ингридиенты показывать
         destinationVC.selectedDish = selectedDish
-
     }
     
     //MARK: Delete Dish -
