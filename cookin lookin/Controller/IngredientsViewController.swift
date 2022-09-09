@@ -28,13 +28,14 @@ class IngredientsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "IngredCell", for: indexPath)
         let ingredient = ingredsArr[indexPath.item]
-        
         var content = cell.defaultContentConfiguration()
         content.text = ingredient.name
         cell.contentConfiguration = content
-        cell.accessoryType = ingredient.inStore ? .checkmark: .none
+        
+        cell.accessoryType = setIngredsCheckmark(ingredient: ingredient) ? .checkmark: .none
         
         // фон ячеек
         let imageView = UIImageView()
@@ -43,6 +44,11 @@ class IngredientsViewController: UITableViewController {
         cell.backgroundView = imageView
         
         return cell
+    }
+    
+    // отдельный метод проставления галочек
+    func setIngredsCheckmark(ingredient: Ingredients) -> Bool {
+        return ingredient.inStore
     }
     
     //MARK: Data manipulation stuff -
@@ -56,10 +62,8 @@ class IngredientsViewController: UITableViewController {
     }
     
     func loadIngreds(_ forDish: Dishes?) {
-        let request = Ingredients.fetchRequest() //: NSFetchRequest<Dishes>
         
-//        request.predicate = NSPredicate(format: "ANY dishes.name MATCHES %@", selectedDish!.name!)
-        //потом заменить на выбор предиката из параметров
+        let request = Ingredients.fetchRequest() //: NSFetchRequest<Dishes>
         if let parentDish = forDish {
             request.predicate = NSPredicate(format: "%@ IN dishes.name", parentDish.name!)
         }
@@ -75,8 +79,6 @@ class IngredientsViewController: UITableViewController {
     //MARK: Addin ingreds -
     @IBAction func addBtnPressed(_ sender: UIBarButtonItem) {
         //кнопка плюс в ингредиентах -- создать и добавить к блюду новый
-        //makeNewIngred()
-        //временно -- открыть ChooseIngreds
         if selectedDish == nil {
             makeNewIngred()
         } else {
@@ -103,9 +105,7 @@ class IngredientsViewController: UITableViewController {
             // нужно походу
             if let parentDish = self.selectedDish {
                 newIngred.addToDishes(parentDish)
-                //print("ADDIN PARENT DISH \(parentDish.name) TO INGRED \(newIngred.name)")
             }
-            //print("AND NOW \(newIngred.name) HAS PARENT DISH \(newIngred.dishes)")
             self.ingredsArr.append(newIngred)
             self.saveIngreds()
         }
