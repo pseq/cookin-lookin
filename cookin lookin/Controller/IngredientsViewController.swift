@@ -147,8 +147,38 @@ class IngredientsViewController: UITableViewController {
     }
     
     func deleteIngred (_ itemIndex: Int) {
-//        context.delete(dishesArr[dishIndex])
-//        dishesArr.remove(at: dishIndex)
-//        saveDishes()
+        
+        func goDelete () {
+            self.context.delete(self.ingredsArr[itemIndex])
+            self.ingredsArr.remove(at: itemIndex)
+            self.saveIngreds()
+        }
+        
+        if let dishes = ingredsArr[itemIndex].dishes {
+            if dishes.count > 0 {
+                //Если есть привязанные блюда -- выводим предупреждение перед удалением
+                var alertText = "\(ingredsArr[itemIndex].name ?? "Error ingred name!!!") in dishes:\n"
+                //делаем список блюд
+                for dishElement in dishes {
+                    let dish = dishElement as! Dishes
+                    alertText += "\(dish.name  ?? "Error dish!!!")\n"
+                }
+                
+                let alert = UIAlertController(title: alertText, message: "", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Delete from all dishes", style: .default) { (action) in
+                    //удаляем
+                    goDelete()
+                }
+                
+                let actionDis = UIAlertAction(title: "Cancel", style: .default) { (action) in
+                    alert.dismiss(animated: true, completion: nil)
+                    return
+                }
+
+                alert.addAction(action)
+                alert.addAction(actionDis)
+                present(alert, animated: true, completion: nil)
+            } else { goDelete() }
+        }
     }
 }
