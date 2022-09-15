@@ -36,15 +36,24 @@ class DishesViewController: UITableViewController {
         var content = cell.defaultContentConfiguration()
         
         content.text = dish.name
-        // раскраска ячеек
-        cell.backgroundColor = dishCheckout(dish)
-        cell.contentConfiguration = content
         
-        // фон ячеек
-        let imageView = UIImageView()
-        let image = UIImage(named: "cell_img")
-        imageView.image = image
-        cell.backgroundView = imageView
+        //content.image = UIImage(systemName: "circlebadge.fill")
+        //content.imageProperties.tintColor = dishCheckout(dish)
+        
+        let imgV = UIImageView(image: UIImage(systemName: "circlebadge.fill"))
+        imgV.tintColor = dishCheckout(dish)
+        cell.accessoryView = imgV
+        
+//        // раскраска ячеек
+//        cell.backgroundColor = dishCheckout(dish)
+        
+        cell.contentConfiguration = content
+                
+//        // фон ячеек
+//        let imageView = UIImageView()
+//        let image = UIImage(named: "cell_img")
+//        imageView.image = image
+//        cell.backgroundView = imageView
         
         return cell
     }
@@ -159,14 +168,23 @@ class DishesViewController: UITableViewController {
             print("Error count ingreds in CoreData: \(error)")
         }
 
+//        if allCount == 0 {
+//            return .clear
+//        } else if inStoreCount == allCount {
+//            return UIColor(named: "cellGreen")!
+//        } else if Double(inStoreCount)/Double(allCount) < 0.6 {
+//            return UIColor(named: "cellRed")!
+//        } else {
+//            return UIColor(named: "cellYellow")!
+//        }
         if allCount == 0 {
             return .clear
         } else if inStoreCount == allCount {
-            return UIColor(named: "cellGreen")!
+            return .green
         } else if Double(inStoreCount)/Double(allCount) < 0.6 {
-            return UIColor(named: "cellRed")!
+            return .red
         } else {
-            return UIColor(named: "cellYellow")!
+            return .yellow
         }
     }
 }

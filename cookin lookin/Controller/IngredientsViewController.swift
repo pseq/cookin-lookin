@@ -37,11 +37,12 @@ class IngredientsViewController: UITableViewController {
         
         cell.accessoryType = setIngredsCheckmark(ingredient: ingredient) ? .checkmark: .none
         
-        // фон ячеек
-        let imageView = UIImageView()
-        let image = UIImage(named: "cell_img")
-        imageView.image = image
-        cell.backgroundView = imageView
+        
+//        // фон ячеек
+//        let imageView = UIImageView()
+//        let image = UIImage(named: "cell_img")
+//        imageView.image = image
+//        cell.backgroundView = imageView
         
         return cell
     }
