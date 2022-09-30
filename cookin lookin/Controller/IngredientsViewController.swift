@@ -65,6 +65,9 @@ class IngredientsViewController: UITableViewController {
     func loadIngreds(_ forDish: Dishes?) {
         
         let request = Ingredients.fetchRequest() //: NSFetchRequest<Dishes>
+        // сортировка
+        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+
         if let parentDish = forDish {
             request.predicate = NSPredicate(format: "%@ IN dishes.name", parentDish.name!)
         }
