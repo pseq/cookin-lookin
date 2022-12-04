@@ -10,7 +10,7 @@ import CoreData
 
 class DishesViewController: UITableViewController {
 
-    //here will be a realm version
+    //here will be a realm version 2
     var dishesArr = [Dishes]()
     // костыльная переменная для навигации
     var selectedDish: Dishes?
