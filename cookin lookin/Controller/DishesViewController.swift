@@ -6,16 +6,15 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class DishesViewController: UITableViewController {
 
-    //here will be a realm version - 3
-    var dishesArr = [Dishes]()
+    let realm = try! Realm()
+    var dishes: Results<Dishes>?
+    
     // костыльная переменная для навигации
     var selectedDish: Dishes?
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,59 +26,43 @@ class DishesViewController: UITableViewController {
 
     //MARK: TableView stuff -
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dishesArr.count
+        return dishes?.count ?? 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "DishCell", for: indexPath)
-        let dish = dishesArr[indexPath.item]
+        let dish = dishes?[indexPath.item]
         
         var content = cell.defaultContentConfiguration()
         
-        content.text = dish.name
+        content.text = dish?.name ?? "No dishes"
         
-        //content.image = UIImage(systemName: "circlebadge.fill")
-        //content.imageProperties.tintColor = dishCheckout(dish)
-        
-        let imgV = UIImageView(image: UIImage(systemName: "circlebadge.fill"))
-        imgV.tintColor = dishCheckout(dish)
-        cell.accessoryView = imgV
-        
-//        // раскраска ячеек
-//        cell.backgroundColor = dishCheckout(dish)
-        
-        cell.contentConfiguration = content
-                
-//        // фон ячеек
-//        let imageView = UIImageView()
-//        let image = UIImage(named: "cell_img")
-//        imageView.image = image
-//        cell.backgroundView = imageView
+        // раскраска ячеек
+        if let realDish = dish {
+                    let imgV = UIImageView(image: UIImage(systemName: "circlebadge.fill"))
+                    imgV.tintColor = dishCheckout(realDish)
+                    cell.accessoryView = imgV
+            cell.contentConfiguration = content
+        }
         
         return cell
     }
     
     //MARK: Data manipulation stuff -
-    func saveDishes() {
+    func save(dish: Dishes) {
         do {
-            try context.save()
+            try realm.write {
+                realm.add(dish)
+            }
         } catch {
-            print("Error save dishes to CoreData: \(error)")
+            print("Error save dishes to Realm: \(error)")
         }
         
         tableView.reloadData()
     }
     
     func loadDishes() {
-        let request = Dishes.fetchRequest() //: NSFetchRequest<Dishes>
-        // сортировка
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        
-        do {
-            dishesArr = try context.fetch(request)
-        } catch {
-            print("Error load dishes from CoreData: \(error)")
-        }
+        dishes = realm.objects(Dishes.self).sorted(byKeyPath: "name")
         tableView.reloadData()
     }
     
@@ -96,10 +79,9 @@ class DishesViewController: UITableViewController {
 
         let alert = UIAlertController(title: "Add a dish", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
-            let newDish = Dishes(context: self.context)
+            let newDish = Dishes()
             newDish.name = textField.text ?? ""
-            self.dishesArr.append(newDish)
-            self.saveDishes()
+            self.save(dish: newDish)
             
             //показать ингридиенты для нового блюда
             self.selectedDish = newDish
@@ -123,7 +105,7 @@ class DishesViewController: UITableViewController {
     //MARK: Select Dish Methods -
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //показать ингридиенты выбранного блюда
-        selectedDish = dishesArr[indexPath.row]
+        selectedDish = dishes![indexPath.row]
         performSegue(withIdentifier: "showIngreds", sender: self)
     }
     
@@ -135,52 +117,30 @@ class DishesViewController: UITableViewController {
     }
     
     //MARK: Delete Dish -
-    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
-        let swipeDishLeft = UIContextualAction(style: .normal, title: "Delete") {
-            [weak self] (action, view, completionHandler) in self?.deleteDish(indexPath.row)
-            completionHandler(true)
-        }
-        swipeDishLeft.backgroundColor = .systemRed
-        
-        return UISwipeActionsConfiguration(actions: [swipeDishLeft])
-    }
-    
-    func deleteDish (_ dishIndex: Int) {
-        context.delete(dishesArr[dishIndex])
-        dishesArr.remove(at: dishIndex)
-        saveDishes()
-    }
+//    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//        
+//        let swipeDishLeft = UIContextualAction(style: .normal, title: "Delete") {
+//            [weak self] (action, view, completionHandler) in self?.deleteDish(indexPath.row)
+//            completionHandler(true)
+//      }
+//        swipeDishLeft.backgroundColor = .systemRed
+//
+//        return UISwipeActionsConfiguration(actions: [swipeDishLeft])
+//    }
+//    
+//    func deleteDish (_ dishIndex: Int) {
+//        context.delete(dishesArr[dishIndex])
+//        dishesArr.remove(at: dishIndex)
+//        saveDishes()
+//    }
     
     
     //MARK: Dish Checkout -
     func dishCheckout(_ dish: Dishes) -> UIColor {
-        let requestInStore = Ingredients.fetchRequest() //: NSFetchRequest<Dishes>
-        let requestAllCount = Ingredients.fetchRequest() //: NSFetchRequest<Dishes>
-        // запросы ингредиентов блюда имеющихся и не имеющихся в наличии
-        requestInStore.predicate = NSPredicate(format: "%@ IN dishes.name AND inStore = true", dish.name!)
-        requestAllCount.predicate = NSPredicate(format: "%@ IN dishes.name", dish.name!)
-        
-        var inStoreCount = 0
-        var allCount = 0
-        
         // считаем ингридиенты имеющиеся и не имеющиеся в наличии для данного блюда
-        do {
-            inStoreCount = try context.count(for: requestInStore)
-            allCount = try context.count(for: requestAllCount)
-        } catch {
-            print("Error count ingreds in CoreData: \(error)")
-        }
+        let inStoreCount = realm.objects(Ingredients.self).filter("%@ IN dishes.name AND inStore = true", dish.name).count
+        let allCount = realm.objects(Ingredients.self).filter("%@ IN dishes.name", dish.name).count
 
-//        if allCount == 0 {
-//            return .clear
-//        } else if inStoreCount == allCount {
-//            return UIColor(named: "cellGreen")!
-//        } else if Double(inStoreCount)/Double(allCount) < 0.6 {
-//            return UIColor(named: "cellRed")!
-//        } else {
-//            return UIColor(named: "cellYellow")!
-//        }
         if allCount == 0 {
             return .clear
         } else if inStoreCount == allCount {

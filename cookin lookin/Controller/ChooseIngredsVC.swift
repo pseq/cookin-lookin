@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class ChooseIngredsVC: IngredientsViewController {
 
@@ -16,7 +16,7 @@ class ChooseIngredsVC: IngredientsViewController {
         loadIngreds(nil)
         //меняем заголовок
         if let parentDish = selectedDish {
-            titleView.title = "Choose ingredients for \(parentDish.name!)"
+            titleView.title = "Choose ingredients for \(parentDish.name)"
         }
     }
 
@@ -24,7 +24,7 @@ class ChooseIngredsVC: IngredientsViewController {
     // отдельный метод проставления галочек
     override func setIngredsCheckmark(ingredient: Ingredients) -> Bool {
         if selectedDish != nil {
-            return ingredient.dishes!.contains(selectedDish!)
+            return ingredient.dishes.contains(selectedDish!)
         } else {
             return ingredient.inStore }
     }
@@ -37,18 +37,24 @@ class ChooseIngredsVC: IngredientsViewController {
     
     //MARK: Select Ingreds Methods -
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let ingredient = ingredsArr[indexPath.row]
         var checked = tableView.dequeueReusableCell(withIdentifier: "IngredCell", for: indexPath).accessoryType
+        
         //когда тыкаем и ингредиент -- он добавляется к блюду
-        if let parentDish = self.selectedDish {
-            if !ingredient.dishes!.contains(parentDish) {
-                ingredient.addToDishes(parentDish)
-                checked = .checkmark
-            } else {
-                ingredient.removeFromDishes(parentDish)
-                checked = .none
+        if let ingredient = ingreds?[indexPath.row] {
+            if let parentDish = self.selectedDish {
+                if !ingredient.dishes.contains(parentDish) {
+                    ingredient.dishes.append(parentDish)
+                    checked = .checkmark
+                } else {
+                    if let parentIndex = ingredient.dishes.firstIndex(of: parentDish) {
+                        ingredient.dishes.remove(at: parentIndex)
+                    }
+                    checked = .none
+                }
+                tableView.reloadData()
             }
-            tableView.reloadData()
         }
+
+
     }
 }

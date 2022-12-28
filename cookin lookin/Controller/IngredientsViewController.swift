@@ -6,13 +6,14 @@
 //
 
 import UIKit
-import CoreData
+import RealmSwift
 
 class IngredientsViewController: UITableViewController {
 
-    var ingredsArr = [Ingredients]()
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var selectedDish : Dishes?
+    let realm = try! Realm()
+    var ingreds: Results<Ingredients>?
+//    var ingreds: List<Ingredients>?
+    var selectedDish: Dishes?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,26 +25,20 @@ class IngredientsViewController: UITableViewController {
 
     //MARK: TableView stuff -
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return ingredsArr.count
+        return ingreds?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "IngredCell", for: indexPath)
-        let ingredient = ingredsArr[indexPath.item]
-        var content = cell.defaultContentConfiguration()
-        content.text = ingredient.name
-        cell.contentConfiguration = content
         
-        cell.accessoryType = setIngredsCheckmark(ingredient: ingredient) ? .checkmark: .none
-        
-        
-//        // фон ячеек
-//        let imageView = UIImageView()
-//        let image = UIImage(named: "cell_img")
-//        imageView.image = image
-//        cell.backgroundView = imageView
-        
+        if let ingredient = ingreds?[indexPath.item] {
+            var content = cell.defaultContentConfiguration()
+            content.text = ingredient.name
+            cell.contentConfiguration = content
+
+            cell.accessoryType = setIngredsCheckmark(ingredient: ingredient) ? .checkmark: .none
+        }
         return cell
     }
     
@@ -53,29 +48,26 @@ class IngredientsViewController: UITableViewController {
     }
     
     //MARK: Data manipulation stuff -
-    func saveIngreds() {
+    func saveIngreds(_ ingredient: Ingredients) {
         do {
-            try context.save()
+            try realm.write {
+                realm.add(ingredient)
+            }
         } catch {
-            print("Error save ingreds to CoreData: \(error)")
+            print("Error save dishes to Realm: \(error)")
         }
         tableView.reloadData()
     }
     
     func loadIngreds(_ forDish: Dishes?) {
         
-        let request = Ingredients.fetchRequest() //: NSFetchRequest<Dishes>
         // сортировка
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+//        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
 
         if let parentDish = forDish {
-            request.predicate = NSPredicate(format: "%@ IN dishes.name", parentDish.name!)
-        }
-
-        do {
-            ingredsArr = try context.fetch(request)
-        } catch {
-            print("Error load ingreds from CoreData: \(error)")
+            ingreds = realm.objects(Ingredients.self).filter("%@ IN dishes.name", parentDish.name)
+        } else {
+            ingreds = realm.objects(Ingredients.self)
         }
         tableView.reloadData()
     }
@@ -101,17 +93,14 @@ class IngredientsViewController: UITableViewController {
 
         let alert = UIAlertController(title: "Add a ingredient", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
-            let newIngred = Ingredients(context: self.context)
+            let newIngred = Ingredients()
             newIngred.name = textField.text ?? ""
             newIngred.inStore = false
-            // добавляем ингредиенту родительское блюдо
-            // нужно ли блюду добавить ингредиент, или это случится автоматически?
-            // нужно походу
+            // добавляем ингридиенту родительское блюдо ??и новый ингридиент в блюдо
             if let parentDish = self.selectedDish {
-                newIngred.addToDishes(parentDish)
+                newIngred.dishes.append(parentDish)
             }
-            self.ingredsArr.append(newIngred)
-            self.saveIngreds()
+            self.saveIngreds(newIngred)
         }
         
         let actionDis = UIAlertAction(title: "Cancel", style: .default) { (action) in
@@ -131,10 +120,16 @@ class IngredientsViewController: UITableViewController {
     //MARK: Select Ingreds Methods -
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let ingred = ingredsArr[indexPath.row]
-        ingred.inStore = !ingred.inStore
-        
-        saveIngreds()
+        if let ingred = ingreds?[indexPath.row] {
+            do {
+                try realm.write {
+                    ingred.inStore = !ingred.inStore
+                }
+            } catch {
+                print("Error mark ingred: \(error)")
+            }
+            tableView.reloadData()
+        }
     }
     
     //MARK: Delete Ingreds -
@@ -152,36 +147,36 @@ class IngredientsViewController: UITableViewController {
     func deleteIngred (_ itemIndex: Int) {
         
         func goDelete () {
-            self.context.delete(self.ingredsArr[itemIndex])
-            self.ingredsArr.remove(at: itemIndex)
-            self.saveIngreds()
+//            self.context.delete(self.ingredsArr[itemIndex])
+            //self.ingreds.remove(at: itemIndex)
+//            self.saveIngreds()
         }
         
-        if let dishes = ingredsArr[itemIndex].dishes {
-            if dishes.count > 0 {
-                //Если есть привязанные блюда -- выводим предупреждение перед удалением
-                var alertText = "\(ingredsArr[itemIndex].name ?? "Error ingred name!!!") in dishes:\n"
-                //делаем список блюд
-                for dishElement in dishes {
-                    let dish = dishElement as! Dishes
-                    alertText += "\(dish.name  ?? "Error dish!!!")\n"
-                }
-                
-                let alert = UIAlertController(title: alertText, message: "", preferredStyle: .alert)
-                let action = UIAlertAction(title: "Delete from all dishes", style: .default) { (action) in
-                    //удаляем
-                    goDelete()
-                }
-                
-                let actionDis = UIAlertAction(title: "Cancel", style: .default) { (action) in
-                    alert.dismiss(animated: true, completion: nil)
-                    return
-                }
-
-                alert.addAction(action)
-                alert.addAction(actionDis)
-                present(alert, animated: true, completion: nil)
-            } else { goDelete() }
-        }
+//        if let dishes = ingredsArr[itemIndex].dishes {
+//            if dishes.count > 0 {
+//                //Если есть привязанные блюда -- выводим предупреждение перед удалением
+//                var alertText = "\(ingredsArr[itemIndex].name ?? "Error ingred name!!!") in dishes:\n"
+//                //делаем список блюд
+//                for dishElement in dishes {
+//                    let dish = dishElement as! Dishes
+//                    alertText += "\(dish.name  ?? "Error dish!!!")\n"
+//                }
+//                
+//                let alert = UIAlertController(title: alertText, message: "", preferredStyle: .alert)
+//                let action = UIAlertAction(title: "Delete from all dishes", style: .default) { (action) in
+//                    //удаляем
+//                    goDelete()
+//                }
+//                
+//                let actionDis = UIAlertAction(title: "Cancel", style: .default) { (action) in
+//                    alert.dismiss(animated: true, completion: nil)
+//                    return
+//                }
+//
+//                alert.addAction(action)
+//                alert.addAction(actionDis)
+//                present(alert, animated: true, completion: nil)
+//            } else { goDelete() }
+//        }
     }
 }

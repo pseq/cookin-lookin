@@ -12,10 +12,12 @@
 		55A1AD2B285BBD2F00B52156 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A1AD2A285BBD2F00B52156 /* SceneDelegate.swift */; };
 		55A1AD2D285BBD2F00B52156 /* DishesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A1AD2C285BBD2F00B52156 /* DishesViewController.swift */; };
 		55A1AD30285BBD2F00B52156 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55A1AD2E285BBD2F00B52156 /* Main.storyboard */; };
-		55A1AD33285BBD2F00B52156 /* cookin_lookin.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 55A1AD31285BBD2F00B52156 /* cookin_lookin.xcdatamodeld */; };
 		55A1AD35285BBD3800B52156 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55A1AD34285BBD3800B52156 /* Assets.xcassets */; };
 		55A1AD38285BBD3800B52156 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55A1AD36285BBD3800B52156 /* LaunchScreen.storyboard */; };
 		55A1AD43285DA2C500B52156 /* IngredientsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A1AD42285DA2C500B52156 /* IngredientsViewController.swift */; };
+		55C2F127294BA04D0041C814 /* Dishes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C2F126294BA04D0041C814 /* Dishes.swift */; };
+		55C2F129294BA0720041C814 /* Ingredients.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C2F128294BA0720041C814 /* Ingredients.swift */; };
+		E421D4169C1F3010220609A2 /* Pods_cookin_lookin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED5296C430F405C7AD7A4F94 /* Pods_cookin_lookin.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,11 +27,15 @@
 		55A1AD2A285BBD2F00B52156 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		55A1AD2C285BBD2F00B52156 /* DishesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishesViewController.swift; sourceTree = "<group>"; };
 		55A1AD2F285BBD2F00B52156 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		55A1AD32285BBD2F00B52156 /* cookin_lookin.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = cookin_lookin.xcdatamodel; sourceTree = "<group>"; };
 		55A1AD34285BBD3800B52156 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55A1AD37285BBD3800B52156 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		55A1AD39285BBD3800B52156 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55A1AD42285DA2C500B52156 /* IngredientsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsViewController.swift; sourceTree = "<group>"; };
+		55C2F126294BA04D0041C814 /* Dishes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dishes.swift; sourceTree = "<group>"; };
+		55C2F128294BA0720041C814 /* Ingredients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ingredients.swift; sourceTree = "<group>"; };
+		C7E8873819C878C5A788B941 /* Pods-cookin lookin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cookin lookin.release.xcconfig"; path = "Target Support Files/Pods-cookin lookin/Pods-cookin lookin.release.xcconfig"; sourceTree = "<group>"; };
+		ED5296C430F405C7AD7A4F94 /* Pods_cookin_lookin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cookin_lookin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1EE1461DA14780C6EB4E8F9 /* Pods-cookin lookin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cookin lookin.debug.xcconfig"; path = "Target Support Files/Pods-cookin lookin/Pods-cookin lookin.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -37,6 +43,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E421D4169C1F3010220609A2 /* Pods_cookin_lookin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -48,6 +55,8 @@
 			children = (
 				55A1AD27285BBD2F00B52156 /* cookin lookin */,
 				55A1AD26285BBD2F00B52156 /* Products */,
+				BD9B97FDBC9D14D17C9E2224 /* Pods */,
+				628D8C1BD107479594C385D6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -76,7 +85,8 @@
 		55A1AD3F285C898E00B52156 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				55A1AD31285BBD2F00B52156 /* cookin_lookin.xcdatamodeld */,
+				55C2F126294BA04D0041C814 /* Dishes.swift */,
+				55C2F128294BA0720041C814 /* Ingredients.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -100,6 +110,23 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		628D8C1BD107479594C385D6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				ED5296C430F405C7AD7A4F94 /* Pods_cookin_lookin.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BD9B97FDBC9D14D17C9E2224 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F1EE1461DA14780C6EB4E8F9 /* Pods-cookin lookin.debug.xcconfig */,
+				C7E8873819C878C5A788B941 /* Pods-cookin lookin.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -107,9 +134,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 55A1AD3C285BBD3800B52156 /* Build configuration list for PBXNativeTarget "cookin lookin" */;
 			buildPhases = (
+				3B8AC76FCC2CA7230386EA18 /* [CP] Check Pods Manifest.lock */,
 				55A1AD21285BBD2F00B52156 /* Sources */,
 				55A1AD22285BBD2F00B52156 /* Frameworks */,
 				55A1AD23285BBD2F00B52156 /* Resources */,
+				84A755CACBE56E02829571AD /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -166,14 +195,57 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3B8AC76FCC2CA7230386EA18 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-cookin lookin-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		84A755CACBE56E02829571AD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-cookin lookin/Pods-cookin lookin-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-cookin lookin/Pods-cookin lookin-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-cookin lookin/Pods-cookin lookin-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		55A1AD21285BBD2F00B52156 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55C2F129294BA0720041C814 /* Ingredients.swift in Sources */,
 				5539758028A06A150088871F /* ChooseIngredsVC.swift in Sources */,
 				55A1AD43285DA2C500B52156 /* IngredientsViewController.swift in Sources */,
-				55A1AD33285BBD2F00B52156 /* cookin_lookin.xcdatamodeld in Sources */,
+				55C2F127294BA04D0041C814 /* Dishes.swift in Sources */,
 				55A1AD2D285BBD2F00B52156 /* DishesViewController.swift in Sources */,
 				55A1AD29285BBD2F00B52156 /* AppDelegate.swift in Sources */,
 				55A1AD2B285BBD2F00B52156 /* SceneDelegate.swift in Sources */,
@@ -320,6 +392,7 @@
 		};
 		55A1AD3D285BBD3800B52156 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F1EE1461DA14780C6EB4E8F9 /* Pods-cookin lookin.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -349,6 +422,7 @@
 		};
 		55A1AD3E285BBD3800B52156 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7E8873819C878C5A788B941 /* Pods-cookin lookin.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -398,19 +472,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		55A1AD31285BBD2F00B52156 /* cookin_lookin.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				55A1AD32285BBD2F00B52156 /* cookin_lookin.xcdatamodel */,
-			);
-			currentVersion = 55A1AD32285BBD2F00B52156 /* cookin_lookin.xcdatamodel */;
-			path = cookin_lookin.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 55A1AD1D285BBD2E00B52156 /* Project object */;
 }
