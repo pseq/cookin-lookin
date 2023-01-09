@@ -23,8 +23,8 @@ class ChooseIngredsVC: IngredientsViewController {
     //MARK: TableView stuff -
     // отдельный метод проставления галочек
     override func setIngredsCheckmark(ingredient: Ingredients) -> Bool {
-        if selectedDish != nil {
-            return ingredient.dishes.contains(selectedDish!)
+        if let parentDish = selectedDish {
+            return ingredient.dishes.contains(where: {$0.name == parentDish.name})
         } else {
             return ingredient.inStore }
     }
@@ -37,19 +37,29 @@ class ChooseIngredsVC: IngredientsViewController {
     
     //MARK: Select Ingreds Methods -
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var checked = tableView.dequeueReusableCell(withIdentifier: "IngredCell", for: indexPath).accessoryType
-        
-        //когда тыкаем и ингредиент -- он добавляется к блюду
+        //когда тыкаем в ингредиент -- он добавляется к блюду
         if let ingredient = ingreds?[indexPath.row] {
-            if let parentDish = self.selectedDish {
-                if !ingredient.dishes.contains(parentDish) {
-                    ingredient.dishes.append(parentDish)
-                    checked = .checkmark
-                } else {
-                    if let parentIndex = ingredient.dishes.firstIndex(of: parentDish) {
-                        ingredient.dishes.remove(at: parentIndex)
+            if let parentDish = selectedDish {
+                if !ingredient.dishes.contains(where: {$0.name == parentDish.name}) {
+                    do {
+                        try realm.write {
+                            ingredient.dishes.append(parentDish)
+                            print("\(parentDish.description) ADDED TO \(ingredient.name)")
+                        }
+                    } catch {
+                        print("Error append ingred to dish: \(error)")
                     }
-                    checked = .none
+                } else {
+                    if let parentIndex = ingredient.dishes.firstIndex(where: {$0.name == parentDish.name}) {
+
+                        do {
+                            try realm.write {
+                                ingredient.dishes.remove(at: parentIndex)
+                            }
+                        } catch {
+                            print("Error remove ingred from dish: \(error)")
+                        }
+                    }
                 }
                 tableView.reloadData()
             }

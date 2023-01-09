@@ -9,10 +9,10 @@ import UIKit
 import RealmSwift
 
 class IngredientsViewController: UITableViewController {
-
+    
     let realm = try! Realm()
     var ingreds: Results<Ingredients>?
-//    var ingreds: List<Ingredients>?
+    //    var ingreds: List<Ingredients>?
     var selectedDish: Dishes?
     
     override func viewDidLoad() {
@@ -22,7 +22,7 @@ class IngredientsViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         loadIngreds(selectedDish)
     }
-
+    
     //MARK: TableView stuff -
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ingreds?.count ?? 0
@@ -36,7 +36,6 @@ class IngredientsViewController: UITableViewController {
             var content = cell.defaultContentConfiguration()
             content.text = ingredient.name
             cell.contentConfiguration = content
-
             cell.accessoryType = setIngredsCheckmark(ingredient: ingredient) ? .checkmark: .none
         }
         return cell
@@ -62,8 +61,8 @@ class IngredientsViewController: UITableViewController {
     func loadIngreds(_ forDish: Dishes?) {
         
         // сортировка
-//        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-
+        //        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        
         if let parentDish = forDish {
             ingreds = realm.objects(Ingredients.self).filter("%@ IN dishes.name", parentDish.name)
         } else {
@@ -90,7 +89,7 @@ class IngredientsViewController: UITableViewController {
     
     func makeNewIngred() {
         var textField = UITextField()
-
+        
         let alert = UIAlertController(title: "Add a ingredient", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
             let newIngred = Ingredients()
@@ -106,12 +105,12 @@ class IngredientsViewController: UITableViewController {
         let actionDis = UIAlertAction(title: "Cancel", style: .default) { (action) in
             alert.dismiss(animated: true, completion: nil)
         }
-
+        
         alert.addTextField { (alerTextField) in
             alerTextField.placeholder = "Type new ingredient"
             textField = alerTextField
         }
-
+        
         alert.addAction(action)
         alert.addAction(actionDis)
         present(alert, animated: true, completion: nil)
@@ -147,36 +146,44 @@ class IngredientsViewController: UITableViewController {
     func deleteIngred (_ itemIndex: Int) {
         
         func goDelete () {
-//            self.context.delete(self.ingredsArr[itemIndex])
-            //self.ingreds.remove(at: itemIndex)
-//            self.saveIngreds()
+            if let ingred = ingreds?[itemIndex] {
+                do {
+                    try realm.write {
+                        realm.delete(ingred)
+                        tableView.reloadData()
+                    }
+                } catch {
+                    print("Error delete ingred: \(error)")
+                }
+            }
         }
-        
-//        if let dishes = ingredsArr[itemIndex].dishes {
-//            if dishes.count > 0 {
-//                //Если есть привязанные блюда -- выводим предупреждение перед удалением
-//                var alertText = "\(ingredsArr[itemIndex].name ?? "Error ingred name!!!") in dishes:\n"
-//                //делаем список блюд
-//                for dishElement in dishes {
-//                    let dish = dishElement as! Dishes
-//                    alertText += "\(dish.name  ?? "Error dish!!!")\n"
-//                }
-//                
-//                let alert = UIAlertController(title: alertText, message: "", preferredStyle: .alert)
-//                let action = UIAlertAction(title: "Delete from all dishes", style: .default) { (action) in
-//                    //удаляем
-//                    goDelete()
-//                }
-//                
-//                let actionDis = UIAlertAction(title: "Cancel", style: .default) { (action) in
-//                    alert.dismiss(animated: true, completion: nil)
-//                    return
-//                }
-//
-//                alert.addAction(action)
-//                alert.addAction(actionDis)
-//                present(alert, animated: true, completion: nil)
-//            } else { goDelete() }
-//        }
-    }
+            
+//            if let dishes = ingreds?[itemIndex].dishes {
+            if let ingred = ingreds?[itemIndex] {
+                if ingred.dishes.count > 0 {
+                    //Если есть привязанные блюда -- выводим предупреждение перед удалением
+                    var alertText = "\(ingred.name) in dishes:\n"
+                    //делаем список блюд
+                    for dishElement in ingred.dishes {
+                        let dish = dishElement //as! Dishes
+                        alertText += "\(dish.name)\n"
+                    }
+                    
+                    let alert = UIAlertController(title: alertText, message: "", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Delete from all dishes", style: .default) { (action) in
+                        //удаляем
+                        goDelete()
+                    }
+                    
+                    let actionDis = UIAlertAction(title: "Cancel", style: .default) { (action) in
+                        alert.dismiss(animated: true, completion: nil)
+                        return
+                    }
+                    
+                    alert.addAction(action)
+                    alert.addAction(actionDis)
+                    present(alert, animated: true, completion: nil)
+                } else { goDelete() }
+            }
+        }
 }

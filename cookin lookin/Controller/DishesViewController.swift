@@ -117,22 +117,28 @@ class DishesViewController: UITableViewController {
     }
     
     //MARK: Delete Dish -
-//    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//        
-//        let swipeDishLeft = UIContextualAction(style: .normal, title: "Delete") {
-//            [weak self] (action, view, completionHandler) in self?.deleteDish(indexPath.row)
-//            completionHandler(true)
-//      }
-//        swipeDishLeft.backgroundColor = .systemRed
-//
-//        return UISwipeActionsConfiguration(actions: [swipeDishLeft])
-//    }
-//    
-//    func deleteDish (_ dishIndex: Int) {
-//        context.delete(dishesArr[dishIndex])
-//        dishesArr.remove(at: dishIndex)
-//        saveDishes()
-//    }
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let swipeDishLeft = UIContextualAction(style: .normal, title: "Delete") {
+            [weak self] (action, view, completionHandler) in self?.deleteDish(self!.dishes![indexPath.row])
+            completionHandler(true)
+      }
+        swipeDishLeft.backgroundColor = .systemRed
+
+        return UISwipeActionsConfiguration(actions: [swipeDishLeft])
+    }
+    
+    func deleteDish (_ dish: Dishes) {
+        do {
+            try realm.write {
+                realm.delete(dish)
+                tableView.reloadData()
+            }
+        } catch {
+            print("Error delete dish: \(error)")
+        }
+    }
+        
     
     
     //MARK: Dish Checkout -
