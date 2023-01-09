@@ -139,8 +139,6 @@ class DishesViewController: UITableViewController {
         }
     }
         
-    
-    
     //MARK: Dish Checkout -
     func dishCheckout(_ dish: Dishes) -> UIColor {
         // считаем ингридиенты имеющиеся и не имеющиеся в наличии для данного блюда
