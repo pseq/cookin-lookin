@@ -63,11 +63,14 @@ class IngredientsViewController: UITableViewController {
         // сортировка
         //        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
         
+        ingreds = realm.objects(Ingredients.self).sorted(byKeyPath: "name")
+        
         if let parentDish = forDish {
-            ingreds = realm.objects(Ingredients.self).filter("%@ IN dishes.name", parentDish.name)
-        } else {
-            ingreds = realm.objects(Ingredients.self)
+            ingreds = ingreds!.filter("%@ IN dishes.name", parentDish.name)
         }
+//        else {
+//            ingreds = realm.objects(Ingredients.self)
+//        }
         tableView.reloadData()
     }
     
@@ -95,7 +98,7 @@ class IngredientsViewController: UITableViewController {
             let newIngred = Ingredients()
             newIngred.name = textField.text ?? ""
             newIngred.inStore = false
-            // добавляем ингридиенту родительское блюдо ??и новый ингридиент в блюдо
+            // добавляем ингридиенту родительское блюдо
             if let parentDish = self.selectedDish {
                 newIngred.dishes.append(parentDish)
             }
@@ -139,7 +142,7 @@ class IngredientsViewController: UITableViewController {
             completionHandler(true)
         }
         swipe.backgroundColor = .systemRed
-        
+
         return UISwipeActionsConfiguration(actions: [swipe])
     }
     
@@ -158,14 +161,13 @@ class IngredientsViewController: UITableViewController {
             }
         }
             
-//            if let dishes = ingreds?[itemIndex].dishes {
             if let ingred = ingreds?[itemIndex] {
                 if ingred.dishes.count > 0 {
                     //Если есть привязанные блюда -- выводим предупреждение перед удалением
                     var alertText = "\(ingred.name) in dishes:\n"
                     //делаем список блюд
                     for dishElement in ingred.dishes {
-                        let dish = dishElement //as! Dishes
+                        let dish = dishElement
                         alertText += "\(dish.name)\n"
                     }
                     

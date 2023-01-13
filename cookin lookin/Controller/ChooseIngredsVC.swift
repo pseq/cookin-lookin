@@ -44,7 +44,6 @@ class ChooseIngredsVC: IngredientsViewController {
                     do {
                         try realm.write {
                             ingredient.dishes.append(parentDish)
-                            print("\(parentDish.description) ADDED TO \(ingredient.name)")
                         }
                     } catch {
                         print("Error append ingred to dish: \(error)")
