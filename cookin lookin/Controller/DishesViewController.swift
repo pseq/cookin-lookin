@@ -42,7 +42,10 @@ class DishesViewController: UITableViewController {
             let imgV = UIImageView(image: UIImage(systemName: "circlebadge.fill"))
             imgV.tintColor = dishCheckout(realDish)
             cell.accessoryView = imgV
-            // here we will plays with colors
+            // here we will plays with colors now
+            
+            
+            
 //            cell.accessoryView?.layer.borderColor = UIColor.black.cgColor
 //            cell.accessoryView?.layer.borderWidth = 3
 //
