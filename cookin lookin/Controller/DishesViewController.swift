@@ -39,9 +39,14 @@ class DishesViewController: UITableViewController {
         
         // раскраска ячеек
         if let realDish = dish {
-                    let imgV = UIImageView(image: UIImage(systemName: "circlebadge.fill"))
-                    imgV.tintColor = dishCheckout(realDish)
-                    cell.accessoryView = imgV
+            let imgV = UIImageView(image: UIImage(systemName: "circlebadge.fill"))
+            imgV.tintColor = dishCheckout(realDish)
+            cell.accessoryView = imgV
+            // here we will plays with colors
+//            cell.accessoryView?.layer.borderColor = UIColor.black.cgColor
+//            cell.accessoryView?.layer.borderWidth = 3
+//
+//            cell.backgroundColor = .red
             cell.contentConfiguration = content
         }
         
