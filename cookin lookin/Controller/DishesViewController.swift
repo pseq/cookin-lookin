@@ -7,6 +7,7 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class DishesViewController: UITableViewController {
 
@@ -49,7 +50,8 @@ class DishesViewController: UITableViewController {
 //            cell.accessoryView?.layer.borderColor = UIColor.black.cgColor
 //            cell.accessoryView?.layer.borderWidth = 3
 //
-//            cell.backgroundColor = .red
+            cell.backgroundColor = RandomFlatColor() 
+            
             cell.contentConfiguration = content
         }
         
