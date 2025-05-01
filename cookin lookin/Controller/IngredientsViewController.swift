@@ -59,6 +59,7 @@ class IngredientsViewController: UITableViewController {
         } catch {
             print("Error save ingreds to CoreData: \(error)")
         }
+        loadIngreds(selectedDish)
         tableView.reloadData()
     }
     
@@ -66,7 +67,7 @@ class IngredientsViewController: UITableViewController {
         
         let request = Ingredients.fetchRequest() //: NSFetchRequest<Dishes>
         // сортировка
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.caseInsensitiveCompare(_:)))]
 
         if let parentDish = forDish {
             request.predicate = NSPredicate(format: "%@ IN dishes.name", parentDish.name!)

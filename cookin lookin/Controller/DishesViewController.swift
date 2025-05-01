@@ -73,8 +73,7 @@ class DishesViewController: UITableViewController {
     func loadDishes() {
         let request = Dishes.fetchRequest() //: NSFetchRequest<Dishes>
         // сортировка
-        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        
+        request.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true, selector: #selector(NSString.caseInsensitiveCompare(_:)))]
         do {
             dishesArr = try context.fetch(request)
         } catch {
@@ -192,4 +191,3 @@ class DishesViewController: UITableViewController {
         }
     }
 }
-
