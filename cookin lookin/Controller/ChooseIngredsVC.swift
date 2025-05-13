@@ -51,4 +51,10 @@ class ChooseIngredsVC: IngredientsViewController {
             tableView.reloadData()
         }
     }
+    
+    //MARK: Delete Ingreds -
+    // Отключаем возможность удаления ингридиентов в окне выбора ингридиентов для блюда
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        return nil
+    }
 }
