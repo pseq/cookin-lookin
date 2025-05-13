@@ -169,9 +169,18 @@ class IngredientsViewController: UITableViewController {
                     //Если есть привязанные блюда -- выводим предупреждение перед удалением
                     var alertText = "\(ingredsArr[itemIndex].name ?? "Error ingred name!!!") in dishes:\n"
                     //делаем список блюд
-                    for dishElement in dishes {
-                        let dish = dishElement as! Dishes
-                        alertText += "\(dish.name  ?? "Error dish!!!")\n"
+//                    for dishElement in dishes {
+//                        let dish = dishElement as! Dishes
+//                        alertText += "\(dish.name  ?? "Error dish!!!")\n"
+//                    }
+                    let dishFirst = dishes.allObjects[0] as! Dishes
+                    alertText += "\(dishFirst.name ?? "Error dish!!!")"
+                    if dishes.count > 1 {
+                        let dishSecond = dishes.allObjects[1] as! Dishes
+                        alertText += ", \(dishSecond.name ?? "Error dish!!!")"
+                    }
+                    if dishes.count > 2 {
+                        alertText += ", and \(dishes.count - 2) more"
                     }
                     
                     let alert = UIAlertController(title: alertText, message: "", preferredStyle: .alert)
