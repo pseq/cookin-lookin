@@ -158,31 +158,37 @@ class IngredientsViewController: UITableViewController {
             self.saveIngreds()
         }
         
-        if let dishes = ingredsArr[itemIndex].dishes {
-            if dishes.count > 0 {
-                //Если есть привязанные блюда -- выводим предупреждение перед удалением
-                var alertText = "\(ingredsArr[itemIndex].name ?? "Error ingred name!!!") in dishes:\n"
-                //делаем список блюд
-                for dishElement in dishes {
-                    let dish = dishElement as! Dishes
-                    alertText += "\(dish.name  ?? "Error dish!!!")\n"
-                }
-                
-                let alert = UIAlertController(title: alertText, message: "", preferredStyle: .alert)
-                let action = UIAlertAction(title: "Delete from all dishes", style: .default) { (action) in
-                    //удаляем
-                    goDelete()
-                }
-                
-                let actionDis = UIAlertAction(title: "Cancel", style: .default) { (action) in
-                    alert.dismiss(animated: true, completion: nil)
-                    return
-                }
-
-                alert.addAction(action)
-                alert.addAction(actionDis)
-                present(alert, animated: true, completion: nil)
-            } else { goDelete() }
+        // Если удаляем ингридиент из выбранного блюда -- удаляем только его связь с блюдом
+        if let dish = selectedDish {
+            ingredsArr[itemIndex].removeFromDishes(dish)
+            self.saveIngreds()
+            
+            // Если удаляем ингридиент из общего списка -- удаляем его полностью
+        }   else if let dishes = ingredsArr[itemIndex].dishes {
+                if dishes.count > 0 {
+                    //Если есть привязанные блюда -- выводим предупреждение перед удалением
+                    var alertText = "\(ingredsArr[itemIndex].name ?? "Error ingred name!!!") in dishes:\n"
+                    //делаем список блюд
+                    for dishElement in dishes {
+                        let dish = dishElement as! Dishes
+                        alertText += "\(dish.name  ?? "Error dish!!!")\n"
+                    }
+                    
+                    let alert = UIAlertController(title: alertText, message: "", preferredStyle: .alert)
+                    let action = UIAlertAction(title: "Delete from all dishes", style: .default) { (action) in
+                        //удаляем
+                        goDelete()
+                    }
+                    
+                    let actionDis = UIAlertAction(title: "Cancel", style: .default) { (action) in
+                        alert.dismiss(animated: true, completion: nil)
+                        return
+                    }
+                    
+                    alert.addAction(action)
+                    alert.addAction(actionDis)
+                    present(alert, animated: true, completion: nil)
+                } else { goDelete() }
         }
     }
 }
