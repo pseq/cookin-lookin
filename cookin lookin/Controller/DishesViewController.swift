@@ -37,14 +37,19 @@ class DishesViewController: UITableViewController {
         var content = cell.defaultContentConfiguration()
         
         content.text = dish.name
+
+        // рисуем кружочек с цветом в зависимости от наличия ингридиентов
+        let colorRound = UIImageView(image: UIImage(systemName: "circlebadge.fill")?.withRenderingMode(.alwaysTemplate))
+        colorRound.tintColor = dishCheckout(dish)
+        // рисуем тень на кружочке
+        colorRound.layer.shadowColor = UIColor.black.cgColor
+        colorRound.layer.shadowOpacity = 0.3
+        colorRound.layer.shadowOffset = CGSize(width: 0, height: 0)
+        colorRound.layer.shadowRadius = 4
+        colorRound.layer.masksToBounds = false
         
-        //content.image = UIImage(systemName: "circlebadge.fill")
-        //content.imageProperties.tintColor = dishCheckout(dish)
-        
-        let imgV = UIImageView(image: UIImage(systemName: "circlebadge.fill"))
-        imgV.tintColor = dishCheckout(dish)
-        cell.accessoryView = imgV
-        
+        cell.accessoryView = colorRound
+
 //        // раскраска ячеек
 //        cell.backgroundColor = dishCheckout(dish)
         

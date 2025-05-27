@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -20,7 +20,7 @@
 
 /* Begin PBXFileReference section */
 		5539757F28A06A150088871F /* ChooseIngredsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseIngredsVC.swift; sourceTree = "<group>"; };
-		55A1AD25285BBD2F00B52156 /* cookin lookin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cookin lookin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55A1AD25285BBD2F00B52156 /* CookinLookin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CookinLookin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55A1AD28285BBD2F00B52156 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55A1AD2A285BBD2F00B52156 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		55A1AD2C285BBD2F00B52156 /* DishesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DishesViewController.swift; sourceTree = "<group>"; };
@@ -54,7 +54,7 @@
 		55A1AD26285BBD2F00B52156 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				55A1AD25285BBD2F00B52156 /* cookin lookin.app */,
+				55A1AD25285BBD2F00B52156 /* CookinLookin.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -67,8 +67,8 @@
 				55A1AD3F285C898E00B52156 /* Model */,
 				55A1AD28285BBD2F00B52156 /* AppDelegate.swift */,
 				55A1AD2A285BBD2F00B52156 /* SceneDelegate.swift */,
-				55A1AD34285BBD3800B52156 /* Assets.xcassets */,
 				55A1AD39285BBD3800B52156 /* Info.plist */,
+				55A1AD34285BBD3800B52156 /* Assets.xcassets */,
 			);
 			path = "cookin lookin";
 			sourceTree = "<group>";
@@ -103,9 +103,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		55A1AD24285BBD2F00B52156 /* cookin lookin */ = {
+		55A1AD24285BBD2F00B52156 /* CookinLookin */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 55A1AD3C285BBD3800B52156 /* Build configuration list for PBXNativeTarget "cookin lookin" */;
+			buildConfigurationList = 55A1AD3C285BBD3800B52156 /* Build configuration list for PBXNativeTarget "CookinLookin" */;
 			buildPhases = (
 				55A1AD21285BBD2F00B52156 /* Sources */,
 				55A1AD22285BBD2F00B52156 /* Frameworks */,
@@ -115,9 +115,9 @@
 			);
 			dependencies = (
 			);
-			name = "cookin lookin";
+			name = CookinLookin;
 			productName = "cookin lookin";
-			productReference = 55A1AD25285BBD2F00B52156 /* cookin lookin.app */;
+			productReference = 55A1AD25285BBD2F00B52156 /* CookinLookin.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -135,8 +135,8 @@
 					};
 				};
 			};
-			buildConfigurationList = 55A1AD20285BBD2E00B52156 /* Build configuration list for PBXProject "cookin lookin" */;
-			compatibilityVersion = "Xcode 13.0";
+			buildConfigurationList = 55A1AD20285BBD2E00B52156 /* Build configuration list for PBXProject "CookinLookin" */;
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -148,7 +148,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				55A1AD24285BBD2F00B52156 /* cookin lookin */,
+				55A1AD24285BBD2F00B52156 /* CookinLookin */,
 			);
 		};
 /* End PBXProject section */
@@ -325,16 +325,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LHC5MJRH8W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "cookin lookin/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -357,16 +359,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = LHC5MJRH8W;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "cookin lookin/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -387,7 +391,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		55A1AD20285BBD2E00B52156 /* Build configuration list for PBXProject "cookin lookin" */ = {
+		55A1AD20285BBD2E00B52156 /* Build configuration list for PBXProject "CookinLookin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55A1AD3A285BBD3800B52156 /* Debug */,
@@ -396,7 +400,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		55A1AD3C285BBD3800B52156 /* Build configuration list for PBXNativeTarget "cookin lookin" */ = {
+		55A1AD3C285BBD3800B52156 /* Build configuration list for PBXNativeTarget "CookinLookin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55A1AD3D285BBD3800B52156 /* Debug */,
