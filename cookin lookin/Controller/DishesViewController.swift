@@ -38,17 +38,20 @@ class DishesViewController: UITableViewController {
         
         content.text = dish.name
 
-        // рисуем кружочек с цветом в зависимости от наличия ингридиентов
-        let colorRound = UIImageView(image: UIImage(systemName: "circlebadge.fill")?.withRenderingMode(.alwaysTemplate))
-        colorRound.tintColor = dishCheckout(dish)
+        // рисуем кружочек с цветом в зависимости от наличия ингридиентовск
+//        let colorRound = UIImageView(image: UIImage(systemName: "moonphase.full.moon.inverse")?.withRenderingMode(.alwaysTemplate))
+        let colorMark = UIImageView(image: UIImage(systemName: "circle.fill")?.withRenderingMode(.alwaysTemplate))
+        colorMark.tintColor = dishCheckout(dish)
+        colorMark.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+
         // рисуем тень на кружочке
-        colorRound.layer.shadowColor = UIColor.black.cgColor
-        colorRound.layer.shadowOpacity = 0.3
-        colorRound.layer.shadowOffset = CGSize(width: 0, height: 0)
-        colorRound.layer.shadowRadius = 4
-        colorRound.layer.masksToBounds = false
+//        colorRound.layer.shadowColor = UIColor.black.cgColor
+//        colorRound.layer.shadowOpacity = 0.2
+//        colorRound.layer.shadowOffset = CGSize(width: 1, height: 1)
+//        colorRound.layer.shadowRadius = 3
+//        colorRound.layer.masksToBounds = false
         
-        cell.accessoryView = colorRound
+        cell.accessoryView = colorMark
 
 //        // раскраска ячеек
 //        cell.backgroundColor = dishCheckout(dish)
@@ -188,11 +191,11 @@ class DishesViewController: UITableViewController {
         if allCount == 0 {
             return .clear
         } else if inStoreCount == allCount {
-            return .green
+            return UIColor(named: "GreenDishMarker")!
         } else if Double(inStoreCount)/Double(allCount) < 0.6 {
-            return .red
+            return UIColor(named: "RedDishMarker")!
         } else {
-            return .yellow
+            return UIColor(named: "YellowDishMarker")!
         }
     }
 }
