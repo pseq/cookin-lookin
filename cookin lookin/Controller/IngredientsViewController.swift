@@ -16,6 +16,11 @@ class IngredientsViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let selectedDishCurrent = selectedDish {
+            self.navigationItem.title = selectedDishCurrent.name
+        } else {
+            self.navigationItem.title = "All ingredients"
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
